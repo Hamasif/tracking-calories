@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE `food` ADD COLUMN `carbs` DOUBLE NOT NULL DEFAULT 0,
+    ADD COLUMN `fat` DOUBLE NOT NULL DEFAULT 0,
+    ADD COLUMN `protein` DOUBLE NOT NULL DEFAULT 0;
+
+-- CreateTable
+CREATE TABLE `ReminderSetting` (
+    `id` VARCHAR(191) NOT NULL,
+    `enabled` BOOLEAN NOT NULL DEFAULT false,
+    `breakfastTime` VARCHAR(191) NOT NULL DEFAULT '07:00',
+    `lunchTime` VARCHAR(191) NOT NULL DEFAULT '12:00',
+    `dinnerTime` VARCHAR(191) NOT NULL DEFAULT '18:00',
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

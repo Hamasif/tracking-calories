@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String    @unique
+  passwordHash  String
+  targetCalorie Int       @default(2000)
+  createdAt     DateTime  @default(now())
+  mealLogs      MealLog[]
+}
+
+model Food {
+  id              String   @id @default(uuid())
+  name            String
+  imageUrl        String?  @db.Text
+  estimatedCalorie Int
+  category        String?
+  protein         Float    @default(0)
+  carbs           Float    @default(0)
+  fat             Float    @default(0)
+  createdAt       DateTime @default(now())
+  mealItems       MealItem[]
+}
+
+model ReminderSetting {
+  id             String   @id @default(uuid())
+  enabled        Boolean  @default(false)
+  breakfastTime  String   @default("07:00")
+  lunchTime      String   @default("12:00")
+  dinnerTime     String   @default("18:00")
+}
+
+model MealLog {
+  id          String   @id @default(uuid())
+  userId      String
+  date        DateTime
+  mealType    String
+  user        User     @relation(fields: [userId], references: [id])
+  items       MealItem[]
+  totalCalorie Int      @default(0)
+}
+
+model MealItem {
+  id        String @id @default(uuid())
+  mealLogId String
+  foodId    String
+  quantity  Int    @default(1)
+  mealLog   MealLog @relation(fields: [mealLogId], references: [id], onDelete: Cascade)
+  food      Food   @relation(fields: [foodId], references: [id], onDelete: Cascade)
+}

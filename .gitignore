@@ -26,6 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
 
 # vercel
@@ -34,3 +35,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local AI tool configs
+.agents/
+.claude/
+.windsurf/
+skills-lock.json
+
+# uploaded food photos (dev only; production uses Vercel Blob)
+public/uploads/*
+
+/src/generated/prisma
