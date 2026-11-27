@@ -35,7 +35,7 @@ export default function RegisterPage() {
             <div className="relative">
               <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" />
               <Input
-                placeholder="Dokter Hewan"
+                placeholder="Bubub"
                 className="pl-11"
                 value={name}
                 onChange={(e) => setName(e.target.value)}

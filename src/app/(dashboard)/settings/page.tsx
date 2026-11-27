@@ -173,7 +173,7 @@ export default function SettingsPage() {
           <PawPrint className="h-6 w-6" />
         </span>
         <div className="flex-1">
-          <h3 className="font-bold text-ink">Dokter Hewan</h3>
+          <h3 className="font-bold text-ink">Bubub</h3>
           <p className="text-sm text-ink-soft">Pengaturan akun & profil</p>
         </div>
         <Shield className="h-5 w-5 text-ink-faint" />

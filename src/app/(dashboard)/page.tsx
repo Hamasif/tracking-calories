@@ -28,6 +28,14 @@ const MACRO_META = [
 
 const MEAL_ORDER = ["sarapan", "siang", "malam", "snack"]
 
+function greeting() {
+  const h = new Date().getHours()
+  if (h < 11) return "Selamat pagi"
+  if (h < 15) return "Selamat siang"
+  if (h < 19) return "Selamat sore"
+  return "Selamat malam"
+}
+
 const MEAL_META: Record<string, { label: string; emoji: string; icon: typeof Utensils }> = {
   sarapan: { label: "Sarapan", emoji: "🌅", icon: Croissant },
   siang: { label: "Makan siang", emoji: "☀️", icon: Salad },
@@ -111,6 +119,20 @@ export default function HomePage() {
 
   return (
     <div className="space-y-5 md:space-y-6">
+      {/* Salam di HP (header mobile dibuat ringkas) */}
+      <div className="md:hidden">
+        <h2 className="text-2xl font-bold tracking-tight text-ink">
+          {greeting()}, Bubub 👋
+        </h2>
+        <p className="text-sm text-ink-soft">
+          {new Date().toLocaleDateString("id-ID", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+          })}
+        </p>
+      </div>
+
       {reminderMessage && (
         <div className="flex items-center gap-3 rounded-2xl border border-stat-amber/30 bg-stat-amber/15 p-4 text-sm font-medium text-ink animate-fade-up">
           <span className="text-lg">⏰</span>
@@ -232,7 +254,7 @@ export default function HomePage() {
             ))}
           </div>
           <p className="mt-4 text-xs leading-relaxed text-ink-soft">
-            Tetap seimbangkan protein, karbo, dan lemak — dokter hewan sedang mengawasi! 🩺
+            Tetap seimbangkan protein, karbo, dan lemak — Bubub sedang mengawasi! 🩺
           </p>
         </Card>
       </div>

@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button"
 const navItems = [
   { name: "Beranda", href: "/", icon: Home },
   { name: "Jadwal", href: "/meals", icon: CalendarDays },
+  { name: "Scan", href: "/scan", icon: ScanLine, highlight: true },
   { name: "Makanan", href: "/foods", icon: UtensilsCrossed },
   { name: "Pengaturan", href: "/settings", icon: Settings },
 ]
@@ -27,6 +28,14 @@ const navItems = [
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/"
   return pathname === href || pathname.startsWith(`${href}/`)
+}
+
+function greeting() {
+  const h = new Date().getHours()
+  if (h < 11) return "Selamat pagi"
+  if (h < 15) return "Selamat siang"
+  if (h < 19) return "Selamat sore"
+  return "Selamat malam"
 }
 
 function HeaderCalorieChip() {
@@ -40,7 +49,7 @@ function HeaderCalorieChip() {
   }, [])
 
   return (
-    <div className="hidden items-center gap-2 rounded-full bg-white px-4 py-2 shadow-soft sm:flex">
+    <div className="hidden items-center gap-2 rounded-full bg-white px-4 py-2 shadow-soft lg:flex">
       <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-brand-700">
         <PawPrint className="h-4 w-4" />
       </span>
@@ -76,7 +85,7 @@ export default function DashboardLayout({
           </span>
           <span className="hidden lg:block">
             <span className="block text-sm font-bold leading-tight text-ink">Tracking Calories</span>
-            <span className="block text-xs text-ink-soft">Asisten dokter hewan</span>
+            <span className="block text-xs text-ink-soft">Asisten Bubub</span>
           </span>
         </Link>
 
@@ -85,6 +94,7 @@ export default function DashboardLayout({
             Menu
           </p>
           {navItems.map((item) => {
+            if (item.href === "/scan") return null
             const active = isActive(pathname, item.href)
             return (
               <Link
@@ -115,7 +125,7 @@ export default function DashboardLayout({
         <div className="hidden items-center gap-3 rounded-2xl bg-canvas/70 p-3 lg:flex">
           <Mascot status="safe" size="sm" />
           <div>
-            <p className="text-xs font-semibold text-ink">Dokter Hewan</p>
+            <p className="text-xs font-semibold text-ink">Bubub</p>
             <p className="text-[11px] text-ink-soft">Siap membantu hari ini</p>
           </div>
         </div>
@@ -143,6 +153,7 @@ export default function DashboardLayout({
 
             <nav className="flex flex-col gap-1">
               {navItems.map((item) => {
+                if (item.href === "/scan") return null
                 const active = isActive(pathname, item.href)
                 return (
                   <Link
@@ -172,7 +183,7 @@ export default function DashboardLayout({
             <div className="mt-auto flex items-center gap-3 rounded-2xl bg-canvas/70 p-3">
               <Mascot status="safe" size="sm" />
               <div>
-                <p className="text-xs font-semibold text-ink">Dokter Hewan</p>
+                <p className="text-xs font-semibold text-ink">Bubub</p>
                 <p className="text-[11px] text-ink-soft">Siap membantu hari ini</p>
               </div>
             </div>
@@ -195,17 +206,28 @@ export default function DashboardLayout({
               <MenuIcon className="h-5 w-5" />
             </Button>
 
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-xs text-ink-soft">{today}</p>
-              <h1 className="truncate text-base font-bold tracking-tight text-ink md:text-lg">
-                {greeting()}, Dokter Hewan 👋
+            {/* HP: logo singkat & rapi (tanpa teks panjang yang terpotong) */}
+            <div className="flex min-w-0 flex-1 items-center gap-2 md:hidden">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-500 text-white shadow-glow">
+                <PawPrint className="h-4 w-4" />
+              </span>
+              <span className="truncate text-sm font-bold tracking-tight text-ink">
+                Tracking Calories
+              </span>
+            </div>
+
+            {/* Desktop: tanggal + salam */}
+            <div className="hidden min-w-0 flex-1 md:block">
+              <p className="text-xs text-ink-soft">{today}</p>
+              <h1 className="truncate text-lg font-bold tracking-tight text-ink">
+                {greeting()}, Bubub 👋
               </h1>
             </div>
 
             <HeaderCalorieChip />
 
             <button
-              className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink-soft shadow-soft transition-colors hover:text-ink"
+              className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-ink-soft shadow-soft transition-colors hover:text-ink"
               aria-label="Notifikasi"
             >
               <Bell className="h-5 w-5" />
@@ -214,74 +236,58 @@ export default function DashboardLayout({
 
             <div
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-ink text-sm font-bold text-white shadow-soft"
-              title="Dokter Hewan"
+              title="Bubub"
             >
-              DH
+              BB
             </div>
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-5 md:px-6 md:pb-10 md:pt-8">
+        <main className="mx-auto w-full max-w-6xl px-4 pb-[calc(4.5rem+env(safe-area-inset-bottom))] pt-5 md:px-6 md:pb-10 md:pt-8">
           {children}
         </main>
       </div>
 
-      {/* ===== Bottom nav mobile ===== */}
+      {/* ===== Bottom nav mobile: 5 tab rata, Scan tab hijau ===== */}
       <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-black/[0.05] bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
-        <div className="flex items-end justify-around px-4 pb-2 pt-1.5">
-          {navItems.slice(0, 2).map((item) => (
-            <MobileTab key={item.href} item={item} pathname={pathname} />
-          ))}
-
-          <Link
-            href="/scan"
-            className="-mt-7 flex h-14 w-14 flex-col items-center justify-center rounded-full bg-brand-500 text-white shadow-glow transition-transform active:scale-95"
-            aria-label="Scan makanan"
-          >
-            <ScanLine className="h-6 w-6" />
-            <span className="text-[9px] font-bold">Scan</span>
-          </Link>
-
-          {navItems.slice(2).map((item) => (
-            <MobileTab key={item.href} item={item} pathname={pathname} />
-          ))}
+        <div className="mx-auto grid h-16 max-w-lg grid-cols-5 items-stretch">
+          {navItems.map((item) => {
+            const active = isActive(pathname, item.href)
+            const highlight = item.highlight
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                aria-label={item.name}
+                className={`flex flex-col items-center justify-center gap-1 transition-colors ${
+                  highlight ? "" : active ? "text-brand-700" : "text-ink-faint"
+                }`}
+              >
+                <span
+                  className={`flex h-10 w-10 items-center justify-center rounded-full transition-all ${
+                    highlight
+                      ? active
+                        ? "bg-brand-600 text-white shadow-glow"
+                        : "bg-brand-500 text-white shadow-soft"
+                      : active
+                        ? "bg-brand-100 text-brand-700"
+                        : "bg-transparent"
+                  }`}
+                >
+                  <item.icon className="h-[22px] w-[22px]" />
+                </span>
+                <span
+                  className={`text-[10px] font-semibold leading-none ${
+                    highlight ? "text-brand-700" : ""
+                  }`}
+                >
+                  {item.name}
+                </span>
+              </Link>
+            )
+          })}
         </div>
       </nav>
     </div>
   )
-}
-
-function MobileTab({
-  item,
-  pathname,
-}: {
-  item: { name: string; href: string; icon: typeof Home }
-  pathname: string
-}) {
-  const active = isActive(pathname, item.href)
-  return (
-    <Link
-      href={item.href}
-      className={`flex min-w-[56px] flex-col items-center gap-1 rounded-xl px-3 py-1.5 text-[10px] font-semibold transition-colors ${
-        active ? "text-brand-700" : "text-ink-faint"
-      }`}
-    >
-      <span
-        className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-          active ? "bg-brand-100" : "bg-transparent"
-        }`}
-      >
-        <item.icon className="h-5 w-5" />
-      </span>
-      {item.name}
-    </Link>
-  )
-}
-
-function greeting() {
-  const h = new Date().getHours()
-  if (h < 11) return "Selamat pagi"
-  if (h < 15) return "Selamat siang"
-  if (h < 19) return "Selamat sore"
-  return "Selamat malam"
 }

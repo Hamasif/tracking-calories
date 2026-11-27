@@ -241,7 +241,7 @@ function ScanContent() {
   /* ============ LAYAR REVIEW DAFTAR ITEM ============ */
   if (step === "review") {
     return (
-      <div className="mx-auto max-w-3xl space-y-5 pb-40 sm:pb-32">
+      <div className="mx-auto max-w-3xl space-y-5 pb-[calc(11.5rem+env(safe-area-inset-bottom))]">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-ink">Hasil Scan</h2>
@@ -394,7 +394,7 @@ function ScanContent() {
         </Card>
 
         {/* Ringkasan + simpan (sticky bawah) */}
-        <div className="fixed inset-x-0 bottom-16 z-20 border-t border-black/5 bg-white/95 p-4 backdrop-blur-md md:bottom-0 md:left-[84px] lg:left-64">
+        <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 border-t border-black/5 bg-white/95 p-4 backdrop-blur-md md:bottom-0 md:left-[84px] lg:left-64">
           <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-xs text-ink-soft">

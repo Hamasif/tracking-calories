@@ -34,7 +34,7 @@ export default function AuthLayout({
             </h1>
             <p className="mt-4 max-w-md text-white/70">
               Scan makanan, catat makronutrisi, dan lihat progres mingguanmu —
-              ditemani asisten dokter hewan yang siap mengawasi.
+              ditemani asisten Bubub yang siap membantu.
             </p>
           </div>
 

@@ -25,7 +25,7 @@ export default function LoginPage() {
           <PawPrint className="h-6 w-6" />
         </span>
         <CardTitle className="text-2xl">Masuk</CardTitle>
-        <CardDescription>Selamat datang kembali, dokter hewan!</CardDescription>
+        <CardDescription>Selamat datang kembali, Bubub!</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
